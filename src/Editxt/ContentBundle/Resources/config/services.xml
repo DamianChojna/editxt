@@ -1,0 +1,116 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <!-- Entities -->
+        <parameter key="editxt.content.entity.class">Editxt\ContentBundle\Entity\Content</parameter>
+        <parameter key="editxt.tag.entity.class">Editxt\ContentBundle\Entity\Tag</parameter>
+        <parameter key="editxt.sub_title.entity.class">Editxt\ContentBundle\Entity\SubTitle</parameter>
+
+        <!-- Repositories -->
+        <parameter key="editxt.content.repository.class">Editxt\ContentBundle\Repository\ContentRepository</parameter>
+        <parameter key="editxt.content_item.repository.class">Editxt\ContentBundle\Repository\ContentItemRepository</parameter>
+        <parameter key="editxt.content_related.repository.class">Editxt\ContentBundle\Repository\ContentRelatedRepository</parameter>
+        <parameter key="editxt.tag.repository.class">Editxt\ContentBundle\Repository\TagRepository</parameter>
+
+        <!-- Providers -->
+        <parameter key="editxt.content.provider.class">Editxt\ContentBundle\Service\ContentProvider</parameter>
+        <parameter key="editxt.content_item.provider.class">Editxt\ContentBundle\Service\ContentItemProvider</parameter>
+
+        <!-- Forms -->
+        <parameter key="editxt.content_item.form.class">Editxt\ContentBundle\Form\ContentItemType</parameter>
+        <parameter key="editxt.content_related.form.class">Editxt\ContentBundle\Form\ContentRelatedType</parameter>
+        <parameter key="editxt.tag.form.class">Editxt\ContentBundle\Form\TagType</parameter>
+        <parameter key="editxt.subtitle.form.class">Editxt\ContentBundle\Form\SubTitleType</parameter>
+
+    </parameters>
+
+    <services>
+        <!-- Manager -->
+        <service id="editxt.content_item.tag_manager" class="Editxt\ContentBundle\Manager\TagManager">
+            <argument type="service" id="doctrine"/>
+            <call method="setEntityClass">
+                <argument>%editxt.tag.entity.class%</argument>
+            </call>
+        </service>
+        <service id="editxt.content_item.subtitle_manager" class="Editxt\ContentBundle\Manager\TagManager">
+            <argument type="service" id="doctrine"/>
+            <call method="setEntityClass">
+                <argument>%editxt.sub_title.entity.class%</argument>
+            </call>
+        </service>
+
+
+        <!--Listeners -->
+        <service id="content_item.pre_add_event.listener" class="Editxt\ContentBundle\EventListener\ContentItemPreAddListener">
+            <tag name="kernel.event_listener" event="editxt_contentbundle.content_item.pre_add_event" method="onPreAdd" />
+        </service>
+
+        <!-- Subscriber -->
+        <service id="content_item.doctrine.subscriber" class="Editxt\ContentBundle\EventListener\ContentItemSubscriber">
+            <tag name="doctrine.event_subscriber" connection="default" />
+        </service>
+
+        <!-- Repositories -->
+        <service id="editxt.content.repository"
+                 class="%editxt.content.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>ContentBundle:Content</argument>
+        </service>
+        <service id="editxt.content_item.repository"
+                 class="%editxt.content_item.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>ContentBundle:ContentItem</argument>
+        </service>
+        <service id="editxt.content_related.repository"
+                 class="%editxt.content_related.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>ContentBundle:ContentRelated</argument>
+        </service>
+        <service id="editxt.tag.repository"
+                 class="%editxt.tag.repository.class%"
+                 factory-service="doctrine.orm.entity_manager"
+                 factory-method="getRepository">
+            <argument>ContentBundle:Tag</argument>
+        </service>
+
+        <!-- Providers -->
+        <service id="editxt.content.provider" class="%editxt.content.provider.class%">
+            <argument type="service" id="editxt.content.repository" />
+            <argument type="service" id="dch.utility.service.filter" />
+            <argument type="service" id="knp_paginator" />
+            <argument>20</argument>
+        </service>
+        <service id="editxt.content_item.provider" class="%editxt.content_item.provider.class%">
+            <argument type="service" id="editxt.content_item.repository" />
+            <argument type="service" id="dch.utility.service.filter" />
+            <argument type="service" id="knp_paginator" />
+            <argument>20</argument>
+        </service>
+
+        <!-- Forms -->
+        <service id="editxt.content_item.form" class="%editxt.content_item.form.class%" >
+            <argument type="service" id="editxt.content_item.repository"/>
+            <tag name="form.type" alias="editxt_contentbundle_contentitem" />
+        </service>
+        <service id="editxt.content_related.form" class="%editxt.content_related.form.class%" >
+            <argument type="service" id="editxt.content_item.repository"/>
+            <tag name="form.type" alias="editxt_contentbundle_contentrelated" />
+        </service>
+
+        <service id="editxt.tag.form" class="%editxt.tag.form.class%">
+            <argument type="service" id="editxt.content_item.tag_manager"/>
+            <tag name="form.type" alias="editxt_contentbundle_tag" />
+        </service>
+        <service id="editxt.subtitle.form" class="%editxt.subtitle.form.class%">
+            <argument type="service" id="editxt.content_item.subtitle_manager"/>
+            <tag name="form.type" alias="editxt_contentbundle_subtitle" />
+        </service>
+    </services>
+</container>

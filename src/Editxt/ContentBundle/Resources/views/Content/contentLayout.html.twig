@@ -1,0 +1,20 @@
+{% extends app.request.xmlHttpRequest
+? '::base_xhr.html.twig'
+: 'LayoutBundle::layout.html.twig'
+%}
+
+{% form_theme form with ['ContentBundle:Form:editxt_contentbundle_content.html.twig'] %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {% stylesheets '@ContentBundle/Resources/public/css/content.css' %}
+    <link href="{{ asset(asset_url) }}" rel="stylesheet" media="screen"/>
+    {% endstylesheets %}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts '@ContentBundle/Resources/public/js/contentType.js' %}
+    <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

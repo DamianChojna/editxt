@@ -1,0 +1,7 @@
+content_item:
+    resource: "@ContentBundle/Resources/config/routing/contentitem.yml"
+    prefix:   /item
+
+content_content:
+    resource: "@ContentBundle/Resources/config/routing/content.yml"
+    prefix:   /content

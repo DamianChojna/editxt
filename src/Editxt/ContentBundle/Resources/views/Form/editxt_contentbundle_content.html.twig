@@ -1,0 +1,36 @@
+{% block _editxt_contentbundle_content_contentRelated_entry_label %}
+
+{% endblock %}
+
+{% block _editxt_contentbundle_content_contentRelated_entry_row %}
+    {% set disabled = '' %}
+    {% if (form.children.item.vars.value is defined and form.children.item.vars.value is empty) %}
+        {% set disabled = 'disabled' %}
+    {% endif %}
+
+    {% set id = form.vars.value.id is defined ? form.vars.value.id : '' %}
+
+    {% spaceless %}
+        <div>
+            <div
+                class="field contend_related ui tertiary stacked segment{% if errors|length %} error{% endif %}"
+                data-id="content_related_{{ id }}" id="content_related_{{ id }}">
+
+                <div class="ui icon tiny buttons">
+                    <div class="ui teal button open" data-id="content_related_{{ id }}"><i class="icon folder open"></i>Open</div>
+
+                    <div class="ui blue button duplicate"><i class="icon cubes"></i>Duplicate</div>
+
+                    <div class="ui red button remove"><i class="icon remove"></i>Remove</div>
+                    {#<div class="ui button"><i class="icon chevron up"></i></div>#}
+                    {#<div class="ui button"><i class="icon chevron down"></i></div>#}
+                </div>
+
+                <div class="ui fitted divider"></div>
+
+                {{ form_widget(form) }}
+                {{ form_errors(form) }}
+            </div>
+        </div>
+    {% endspaceless %}
+{% endblock %}

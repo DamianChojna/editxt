@@ -1,0 +1,16 @@
+{% extends 'ContentBundle:Content:contentLayout.html.twig' %}
+
+{% block page_content %}
+    <h2 class="ui header">
+        <i class="edit icon"></i>
+        <div class="content">
+            New content
+        </div>
+    </h2>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="ui teal button">Create</button>
+        <a href="#" class="ui purple button add_text_block">Add new Block</a>
+    {{ form_end(form) }}
+{% endblock %}

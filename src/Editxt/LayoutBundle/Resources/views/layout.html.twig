@@ -1,0 +1,89 @@
+{% extends '::base.html.twig' %}
+
+{% block stylesheets %}
+    {% stylesheets '@LayoutBundle/Resources/public/css/main.css' %}
+        <link href="{{ asset(asset_url) }}" rel="stylesheet" media="screen"/>
+    {% endstylesheets %}
+
+    <link rel="stylesheet" href="{{ asset('vendor/semantic-ui/dist/semantic.min.css') }}"/>
+{% endblock %}
+
+
+{% block body %}
+
+    {% block menu %}
+        <nav id="mainMenu">
+            <div class="ui inverted teal large menu">
+                <a class="item" href="{{ path('content') }}">
+                    <i class="home icon"></i>Home
+                </a>
+                <a class="item" href="{{ path('content_new') }}">
+                    <i class="edit icon"></i>
+                    New Content
+                </a>
+                <div class="ui dropdown item">
+                    Items<i class="dropdown icon "></i>
+                    <div class="menu">
+                        <a class="item " href="{{ path('item_new') }}"><i class="edit icon"></i>Add</a>
+                        <a class="item" href="{{ path('item') }}"><i class="list icon"></i>List</a>
+                    </div>
+                </div>
+                <div class="right menu">
+                    <div class="item">
+                        <a href="{{ path('fos_user_security_logout') }}" class="ui inverted button"><i class="user icon"></i>Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    {% endblock %}
+
+    <div class="ui hidden divider"></div>
+
+    <div class="ui segment">
+        <div id="main" class="container">
+            {% block page_content %}{% endblock %}
+        </div>
+    </div>
+
+    {% block modal %}
+        <div class="ui modal">
+            <i class="close icon"></i>
+            <div class="header">
+                 {% block modal_title %}{% endblock %}
+            </div>
+            <div class="content">
+                <div class="ui segment">
+                    <div class="body">
+                       {% block modal_content %}{% endblock %}
+                    </div>
+                    <div class="ui active dimmer">
+                        <div class="ui text loader">Loading</div>
+                    </div>
+                </div>
+            </div>
+            <div class="actions">
+                <div class="ui button">OK</div>
+            </div>
+        </div>
+    {% endblock %}
+{% endblock %}
+
+
+{% block javascripts %}
+    <!--[if !IE]> -->
+    <script src="{{ asset('vendor/jquery/dist/jquery.min.js') }}"></script>
+    <!-- <![endif]-->
+    <!--[if IE]>
+    <script src="{{ asset('vendor/jquery-1.10.2/jquery.min.js') }}"></script>
+    <![endif]-->
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {'callback': 'fos.Router.setData'}) }}"></script>
+    <script src="{{ asset('vendor/semantic-ui/dist/semantic.min.js') }}"></script>
+
+    {% javascripts '@LayoutBundle/Resources/public/js/main.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    {% javascripts '@LayoutBundle/Resources/public/js/menu.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+{% endblock %}

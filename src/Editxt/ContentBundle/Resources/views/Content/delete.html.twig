@@ -1,0 +1,9 @@
+{% extends 'ContentBundle:Content:contentLayout.html.twig' %}
+
+{% block page_content %}
+    <div class="ui warning message">
+        <div class="header"><i class="trash icon"></i>Delete action</div>
+        Do you want delete content <strong>{{ entity.title }}</strong> ?
+    </div>
+    {{ form(form) }}
+{% endblock %}

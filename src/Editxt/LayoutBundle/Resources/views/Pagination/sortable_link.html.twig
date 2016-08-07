@@ -1,0 +1,9 @@
+{% if options.class == 'sortable' %}
+    {% set direction = '' %}
+{% elseif options.class == 'asc' %}
+    {% set direction = 'descending' %}
+{% else %}
+    {% set direction = 'ascending' %}
+{% endif %}
+
+<a{% for attr, value in options %} {{ attr }}="{{ value }}"{% endfor %}><i class="icon sort {{ direction }}"></i>{{ title }}</a>

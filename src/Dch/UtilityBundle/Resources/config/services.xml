@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+
+        <!-- Filters -->
+        <parameter key="dch.utility.filter.equal.class">Dch\UtilityBundle\Filter\EqualFilter</parameter>
+        <parameter key="dch.utility.filter.like.class">Dch\UtilityBundle\Filter\LikeFilter</parameter>
+        <parameter key="dch.utility.service.filter.class">Dch\UtilityBundle\Service\Filter</parameter>
+
+    </parameters>
+
+    <services>
+
+        <!-- Filters -->
+        <service id="dch.utility.filter.equal" class="%dch.utility.filter.equal.class%" />
+        <service id="dch.utility.filter.like" class="%dch.utility.filter.like.class%" />
+
+        <service id="dch.utility.service.filter" class="%dch.utility.service.filter.class%">
+            <argument type="collection">
+                <argument type="service" id="dch.utility.filter.equal" />
+                <argument type="service" id="dch.utility.filter.like" />
+            </argument>
+        </service>
+
+    </services>
+</container>

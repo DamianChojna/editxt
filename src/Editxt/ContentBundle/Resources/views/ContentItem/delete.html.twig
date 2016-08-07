@@ -1,0 +1,25 @@
+{% extends 'ContentBundle:ContentItem:contentItemLayout.html.twig' %}
+
+{% block page_content %}
+    <div class="ui warning message">
+        <div class="header"><i class="trash icon"></i>Delete action</div>
+        <strong>Do you want delete item ?</strong><br>
+        <h3>{{ entity.title }}</h3>
+        {{ entity.body|raw }}
+    </div>
+
+    <div class="ui warning message">
+        <div class="header"><i class="edit icon"></i>Related Content</div>
+            <ul>
+            {% for related in contentRelated %}
+                <li>
+                    <a href="{{ path('content', {'id': related.getContent().getId()}) }}">{{ related.getContent().getTitle() }}</a>
+                </li>
+            {% else %}
+                No Results
+            {% endfor %}
+            </ul>
+    </div>
+
+    {{ form(form) }}
+{% endblock %}

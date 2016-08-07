@@ -1,0 +1,75 @@
+{% extends 'ContentBundle:ContentItem:contentItemLayout.html.twig'%}
+
+{% block page_content %}
+    <h2 class="ui header">
+        <i class="list icon"></i>
+        <div class="content">
+            Items
+        </div>
+    </h2>
+
+    <div>
+        {{ form_start(filter_form) }}
+            {{ form_widget(filter_form) }}
+            <button type="submit" class="ui teal button"><i class="ui icon search"></i>Search</button>
+            <a href="{{ path('item' ) }}" class="ui red button"><i class="ui icon refresh"></i>Reset</a>
+        {{ form_end(filter_form) }}
+    </div>
+
+    <table class="ui table content_item_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>SubTitles</th>
+                <th>Body</th>
+                <th>Tags</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td>{{ entity.title }}</td>
+                    <td>{{ entity.subTitlesToString() }}</td>
+                    <td>{{ entity.body|striptags|truncate(800) }}</td>
+                    <td>
+                        {% for tag in entity.getTags() %}
+                            <span class="ui mini label">
+                                {{ tag.getName() }}
+                            </span>
+                        {% endfor %}
+                    </td>
+                    <td>
+                        {% if app.request.xmlHttpRequest %}
+                            <button
+                                    data-id="{{ entity.id }}"
+                                    data-title="{{ entity.title }}"
+                                    data-subtitles="{{ entity.subTitlesToString() }}"
+                                    data-body="{{ entity.body|raw|escape }}"
+                                    data-tags="{{ entity.tagsToString() }}"
+                                    class="ui icon button teal open">
+                                <i class="folder open icon"></i> Open
+                            </button>
+                        {% else %}
+                            <a href="{{ path('item_show', { 'id': entity.id }) }}" class="ui icon button teal">
+                                <i class="unhide icon"></i>
+                            </a>
+                            <a href="{{ path('item_edit', { 'id': entity.id }) }}" class="ui icon button blue">
+                                <i class="edit icon"></i>
+                            </a>
+                            <a href="{{ path('item_delete', { 'id': entity.id }) }}" class="ui icon button red">
+                                <i class="trash icon"></i>
+                            </a>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation ">
+        {{ knp_pagination_render(entities) }}
+    </div>
+{% endblock %}

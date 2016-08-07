@@ -1,0 +1,50 @@
+{% extends 'ContentBundle:Content:contentLayout.html.twig' %}
+
+{% block page_content %}
+
+    <h1 class="ui header">
+        <div class="content">
+            {{ entity.title }}
+             <div class="sub header">{{ entity.createDate|date('Y-m-d H:i:s') }}</div>
+        </div>
+
+    </h1>
+
+    <div class="ui divider"></div>
+
+    <div>
+        {% for contentRelated in entity.getContentRelated() %}
+            <div class="ui segment item">
+                <h3 class="ui header">
+                    {{ contentRelated.getItem().getTitle() }}
+                    <div class="sub header">{{ contentRelated.getItem().subTitlesToString('<br>')|raw }}</div>
+                </h3>
+                {{ contentRelated.getItem().getBody()|raw }}
+
+                <div class="ui tag tiny labels">
+                    {% for tag in contentRelated.getItem().getTags() %}
+                        <span class="ui label">
+                            {{ tag.getName() }}
+                        </span>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="ui segment">
+        <a href="{{ path('content') }}" class="ui icon button teal">
+            <i class="list icon"></i>Go to List
+        </a>
+        <a href="{{ path('content_pdf', { 'id': entity.id }) }}" class="ui icon button orange">
+            <i class="print icon"></i>PDF
+        </a>
+        <a href="{{ path('content_edit', { 'id': entity.id }) }}" class="ui icon button blue">
+            <i class="edit icon"></i>Edit
+        </a>
+        <a href="{{ path('content_delete', { 'id': entity.id }) }}" class="ui icon button red">
+            <i class="edit icon"></i>Delete
+        </a>
+    </div>
+{% endblock %}
+

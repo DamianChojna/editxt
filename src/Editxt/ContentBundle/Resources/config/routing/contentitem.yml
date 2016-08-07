@@ -1,0 +1,39 @@
+item:
+    path:     /
+    defaults: { _controller: "ContentBundle:ContentItem:index" }
+    options:
+        expose: true
+
+item_show:
+    path:     /{id}/show
+    defaults: { _controller: "ContentBundle:ContentItem:show" }
+
+item_new:
+    path:     /new
+    defaults: { _controller: "ContentBundle:ContentItem:new" }
+
+item_create:
+    path:     /create
+    defaults: { _controller: "ContentBundle:ContentItem:create" }
+    methods:  POST
+
+item_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ContentBundle:ContentItem:edit" }
+
+item_update:
+    path:     /{id}/update
+    defaults: { _controller: "ContentBundle:ContentItem:update" }
+    methods:  [POST, PUT]
+
+item_delete_form:
+    path:     /{id}/delete
+    defaults: { _controller: "ContentBundle:ContentItem:deleteForm" }
+    methods:  [GET]
+
+item_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ContentBundle:ContentItem:delete" }
+    methods:  [POST, DELETE]
+
+

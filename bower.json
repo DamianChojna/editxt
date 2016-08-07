@@ -1,0 +1,13 @@
+{
+  "name": "editxt",
+  "version": "0.0.0",
+  "description": "Edit texts",
+  "authors": [
+    "Damian Chojna"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "semantic-ui": "~1.12.3"
+  }
+}

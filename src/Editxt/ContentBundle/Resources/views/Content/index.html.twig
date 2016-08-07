@@ -1,0 +1,58 @@
+{% extends 'LayoutBundle::layout.html.twig' %}
+
+{% block page_content %}
+    <h2 class="ui header">
+        <i class="edit icon"></i>
+        <div class="content">
+            Contents
+        </div>
+    </h2>
+
+    <div>
+        {{ form_start(filter_form) }}
+            {{ form_widget(filter_form) }}
+            <button type="submit" class="ui teal button"><i class="ui icon search"></i>Search</button>
+            <a href="{{ path('content' ) }}" class="ui red button"><i class="ui icon refresh"></i>Reset</a>
+        {{ form_end(filter_form) }}
+    </div>
+
+    <table class="ui table">
+        <thead>
+        <tr>
+            <th data-field="id">{{ knp_pagination_sortable(entities, 'Id', 'cnt.id') }}</th>
+            <th data-field="title">{{ knp_pagination_sortable(entities, 'Title', 'cnt.title') }}</th>
+            <th data-field="created">{{ knp_pagination_sortable(entities, 'Created', 'cnt.createDate') }}</th>
+            <th data-field="update"><a>{{ knp_pagination_sortable(entities, 'Updated', 'cnt.updateDate') }}</th>
+            <th data-field="buttons"></th>
+        </tr>
+        </thead>
+        <tbody>
+            {% for entity in entities %}
+                <tr>
+                    <td>{{ entity.id }}</td>
+                    <td><a href="{{ path('content_show', { 'id': entity.id }) }}">{{ entity.title }}</a></td>
+                    <td>{% if entity.createDate %}{{ entity.createDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                    <td>{% if entity.updateDate != entity.createDate %}{{ entity.updateDate|date('Y-m-d H:i:s') }}{% else %} {% endif %}</td>
+                    <td>
+                        <a href="{{ path('content_show', { 'id': entity.id }) }}" class="ui icon button teal">
+                            <i class="unhide icon"></i>
+                        </a>
+                        <a href="{{ path('content_pdf', { 'id': entity.id }) }}" class="ui icon button orange">
+                            <i class="print icon"></i>
+                        </a>
+                        <a href="{{ path('content_edit', { 'id': entity.id }) }}" class="ui icon button blue">
+                            <i class="edit icon"></i>
+                        </a>
+                        <a href="{{ path('content_delete_form', { 'id': entity.id }) }}" class="ui icon button red">
+                            <i class="trash icon"></i>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation ">
+        {{ knp_pagination_render(entities) }}
+    </div>
+{% endblock %}

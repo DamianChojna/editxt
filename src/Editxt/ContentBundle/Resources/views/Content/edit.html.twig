@@ -1,0 +1,17 @@
+{% extends 'ContentBundle:Content:contentLayout.html.twig' %}
+
+{% block page_content %}
+    <h2 class="ui header">
+        <i class="edit icon"></i>
+        <div class="content">
+            Edit content
+        </div>
+    </h2>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button type="submit" class="ui teal button">Update</button>
+        <a href="#" class="ui purple button add_text_block">Add new Block</a>
+        <a href="{{ path('content_delete', {'id': entity.id} ) }}" class="ui red button">Delete</a>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,40 @@
+content:
+    path:     /
+    defaults: { _controller: "ContentBundle:Content:index" }
+
+content_show:
+    path:     /{id}/show
+    defaults: { _controller: "ContentBundle:Content:show" }
+
+content_new:
+    path:     /new
+    defaults: { _controller: "ContentBundle:Content:new" }
+
+content_create:
+    path:     /create
+    defaults: { _controller: "ContentBundle:Content:create" }
+    methods:  POST
+
+content_edit:
+    path:     /{id}/edit
+    defaults: { _controller: "ContentBundle:Content:edit" }
+
+content_update:
+    path:     /{id}/update
+    defaults: { _controller: "ContentBundle:Content:update" }
+    methods:  [POST, PUT]
+
+content_delete_form:
+    path:     /{id}/delete
+    defaults: { _controller: "ContentBundle:Content:deleteForm" }
+    methods:  [GET]
+
+content_delete:
+    path:     /{id}/delete
+    defaults: { _controller: "ContentBundle:Content:delete" }
+    methods:  [POST, DELETE]
+
+content_pdf:
+    path:     /{id}.pdf
+    defaults: { _controller: "ContentBundle:Content:pdf" }
+    methods:  [GET]

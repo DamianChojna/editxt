@@ -1,0 +1,34 @@
+{% extends 'ContentBundle:ContentItem:contentItemLayout.html.twig'%}
+
+{% block page_content %}
+    <div>
+        <h2 class="ui dividing header">
+            {{ entity.title }}
+            <div class="sub header">
+                {{ entity.subTitlesToString('<br>')|raw  }}
+            </div>
+        </h2>
+        <div class="ui segment">{{ entity.body|raw }}</div>
+        <div class="ui tag tiny labels">
+            {% for tag in entity.getTags() %}
+                <span class="ui label">
+                {{ tag.getName() }}
+            </span>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="ui segment">
+        <a href="{{ path('item') }}" class="ui icon button teal">
+            <i class="list icon"></i>Go to List
+        </a>
+        <a href="{{ path('item_edit', { 'id': entity.id }) }}" class="ui icon button blue">
+            <i class="edit icon"></i>Edit
+        </a>
+        <a href="{{ path('item_delete', { 'id': entity.id }) }}" class="ui icon button red">
+            <i class="edit icon"></i>Delete
+        </a>
+    </div>
+
+
+{% endblock %}
